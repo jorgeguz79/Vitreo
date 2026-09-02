@@ -1,0 +1,182 @@
+---
+import { Image } from "astro:assets";
+import PrincipleIcon from "../icons/PrincipleIcon.astro";
+import { principles } from "../../data/site";
+import libraryImage from "../../assets/images/biblioteca.jpg";
+---
+
+<section id="principios" class="principios" aria-labelledby="principios-title">
+  <span class="watermark principios-watermark" aria-hidden="true">V</span>
+
+  <div class="principios-top">
+    <div class="principios-left">
+      <div class="principios-head">
+        <h2 id="principios-title" class="principios-title">
+          Nuestros <span class="accent">Principios</span>
+        </h2>
+      </div>
+
+      <ol class="principios-list">
+        {
+          principles.map((principle, index) => (
+            <li class="principio-row" class:list={{ "principio-row--highlight": index % 2 === 0 }}>
+              <span class="principio-n" aria-hidden="true">{principle.number}</span>
+              <span class="principio-icon">
+                <PrincipleIcon name={principle.icon} />
+              </span>
+              <p>{principle.description}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+
+    <div class="principios-visual">
+      <Image
+        src={libraryImage}
+        alt=""
+        aria-hidden="true"
+        widths={[480, 800, 1200]}
+        sizes="(max-width: 900px) 100vw, 57vw"
+        loading="lazy"
+      />
+    </div>
+  </div>
+</section>
+
+<style>
+  .principios {
+    background: var(--color-white);
+    color: var(--color-carbon);
+    position: relative;
+    overflow: hidden;
+    min-height: 94svh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .principios-watermark {
+    left: -8%;
+    top: 4%;
+    z-index: 1;
+    --wm-opacity: 0.045;
+  }
+
+  /* La imagen se posiciona absoluta (como el fondo del Hero) para que su
+     tamaño intrínseco NUNCA participe en el cálculo de altura de la fila:
+     la altura de la sección la define solo min-height + el contenido de
+     .principios-left. Así se evita que la sección crezca más que el Hero. */
+  .principios-top {
+    flex: 1;
+    position: relative;
+  }
+
+  .principios-left {
+    position: absolute;
+    inset: 0 57% 0 0;
+    padding: clamp(60px, 6vw, 90px) clamp(20px, 4vw, 56px) clamp(50px, 5vw, 70px);
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .principios-head {
+    width: 100%;
+    margin-bottom: 1.75rem;
+    max-width: 640px;
+  }
+
+  .principios-title {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: clamp(1.5rem, 2.6vw, 2.9rem);
+    white-space: nowrap;
+    line-height: 1.2;
+    color: var(--color-carbon);
+  }
+  .principios-title .accent {
+    color: inherit;
+  }
+
+  .principios-list {
+    width: 100%;
+    list-style: none;
+    max-width: 640px;
+    border-top: 3px solid var(--color-gold);
+  }
+
+  .principio-row {
+    display: grid;
+    grid-template-columns: 70px 56px 1fr;
+    align-items: center;
+    gap: 1.4rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid rgba(46, 45, 44, 0.15);
+  }
+  .principio-row--highlight {
+    background: rgba(241, 166, 68, 0.06);
+  }
+
+  .principio-n {
+    font-family: var(--font-sans);
+    font-weight: 900;
+    font-size: 2.1rem;
+    color: var(--color-gold);
+    line-height: 1;
+  }
+
+  .principio-icon {
+    width: 48px;
+    height: 48px;
+    color: var(--color-carbon);
+    flex-shrink: 0;
+  }
+
+  .principio-row p {
+    font-size: 1rem;
+    max-width: 52ch;
+    line-height: 1.45;
+    margin-bottom: 0;
+  }
+
+  .principios-visual {
+    position: absolute;
+    inset: 0 0 0 43%;
+    overflow: hidden;
+    clip-path: polygon(30% 0, 100% 0, 100% 100%, 12% 100%);
+  }
+  .principios-visual :global(img) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  @media (max-width: 900px) {
+    /* En móvil no se necesita el truco de posición absoluta: ambos bloques
+       vuelven al flujo normal, apilados uno debajo del otro. */
+    .principios-left {
+      position: static;
+      inset: auto;
+      padding: clamp(70px, 10vw, 110px) clamp(20px, 4vw, 32px) 50px;
+    }
+    .principios-visual {
+      position: relative;
+      inset: auto;
+      clip-path: none;
+      min-height: 280px;
+    }
+    .principio-row {
+      grid-template-columns: 48px 44px 1fr;
+      gap: 0.9rem;
+    }
+    .principio-n {
+      font-size: 1.7rem;
+    }
+    .principio-icon {
+      width: 39px;
+      height: 39px;
+    }
+  }
+</style>

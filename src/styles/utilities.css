@@ -1,0 +1,114 @@
+/**
+ * Utilidades compartidas entre secciones y páginas.
+ * Si un patrón visual se repite 2+ veces, vive aquí (no duplicado por sección).
+ */
+
+.container {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+  position: relative;
+  z-index: 1;
+}
+
+.grid-12 {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  column-gap: var(--grid-gap);
+}
+
+.eyebrow {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.75rem;
+}
+
+.eyebrow::after {
+  content: "";
+  width: 40px;
+  height: 4px;
+  background: currentColor;
+}
+
+.accent {
+  color: var(--color-gold);
+}
+
+/* Marca de agua tipográfica de fondo ("V"), usada en varias secciones */
+.watermark {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  user-select: none;
+  font-family: var(--font-sans);
+  font-weight: 900;
+  line-height: 0.75;
+  font-size: min(70vw, 900px);
+  color: var(--wm-color, var(--color-carbon));
+  opacity: var(--wm-opacity, 0.06);
+}
+
+/* Botones brutalistas: sin radio, borde grueso, invierten color al pasar el mouse */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 16px 30px;
+  border: 3px solid var(--color-carbon);
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.btn:focus-visible {
+  outline: 3px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+.btn--fill {
+  background: var(--color-carbon);
+  color: var(--color-white);
+}
+.btn--fill:hover {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-carbon);
+}
+
+.btn--fill-gold {
+  background: var(--color-gold);
+  border-color: var(--color-gold);
+  color: var(--color-carbon);
+}
+.btn--fill-gold:hover {
+  background: var(--color-lemon);
+  border-color: var(--color-lemon);
+}
+
+.btn--outline {
+  background: transparent;
+  color: var(--color-carbon);
+}
+.btn--outline:hover {
+  background: var(--color-carbon);
+  color: var(--color-white);
+}
+
+.btn--outline-light {
+  border-color: var(--color-white);
+  color: var(--color-white);
+}
+.btn--outline-light:hover {
+  background: var(--color-white);
+  color: var(--color-carbon);
+}

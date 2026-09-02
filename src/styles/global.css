@@ -1,0 +1,19 @@
+/**
+ * Punto de entrada único de estilos globales.
+ * Orden de la cascada: tokens -> fuentes -> reset/base -> utilidades.
+ * Cada sección/componente añade sus propios estilos con <style> con scope local.
+ */
+@import "@fontsource/epilogue/300.css";
+@import "@fontsource/epilogue/400.css";
+@import "@fontsource/epilogue/500.css";
+@import "@fontsource/epilogue/600.css";
+@import "@fontsource/epilogue/700.css";
+@import "@fontsource/epilogue/800.css";
+@import "@fontsource/epilogue/900.css";
+@import "@fontsource/playfair-display/600.css";
+@import "@fontsource/playfair-display/700.css";
+@import "@fontsource/playfair-display/800.css";
+
+@import "./tokens.css";
+@import "./base.css";
+@import "./utilities.css";

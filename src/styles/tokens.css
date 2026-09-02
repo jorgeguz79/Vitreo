@@ -1,0 +1,25 @@
+/**
+ * Design tokens — única fuente de verdad para color, tipografía y espaciado.
+ * Cambiar la marca (colores, fuentes) empieza y termina en este archivo.
+ */
+:root {
+  /* Color */
+  --color-carbon: #2e2d2c;
+  --color-gold: #f1a644;
+  --color-lemon: #ffde7d;
+  --color-gray: #d4d4d4;
+  --color-gray-dark: #4a4947;
+  --color-white: #ffffff;
+
+  /* Tipografía */
+  --font-sans: "Epilogue", system-ui, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+
+  /* Layout */
+  --container-max: 1440px;
+  --container-pad: clamp(20px, 4vw, 56px);
+  --grid-gap: clamp(12px, 2vw, 28px);
+
+  /* Bordes / radios: el diseño es intencionalmente recto (sin radios) */
+  --radius: 0;
+}

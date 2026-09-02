@@ -1,0 +1,131 @@
+---
+import { pillars } from "../../data/site";
+---
+
+<section id="nosotros" class="nosotros" aria-labelledby="nosotros-title">
+  <span class="watermark nosotros-watermark" style="--wm-color: var(--color-white); --wm-opacity: 0.06;" aria-hidden="true">V</span>
+
+  <div class="container grid-12">
+    <div class="n-heading">
+      <p class="eyebrow n-label">Nosotros</p>
+
+      <h2 id="nosotros-title" class="n-title">
+        Nuestra historia define <span class="accent">nuestra forma de invertir.</span>
+      </h2>
+    </div>
+
+    <div class="n-body">
+      <p>
+        Nacimos como el family office de una familia que buscaba una forma más
+        disciplinada de proteger su patrimonio. Con el tiempo, esa misma
+        disciplina se convirtió en la razón por la que otras familias e
+        inversionistas calificados decidieron acompañarnos.
+      </p>
+      <p>
+        Hoy seguimos operando bajo esa misma filosofía: decisiones cuidadosas,
+        relaciones de largo plazo y un compromiso real con cada inversionista
+        que confía en nosotros.
+      </p>
+
+      <ul class="n-pillars">
+        {
+          pillars.map((pillar) => (
+            <li class="n-pillar">
+              <h3>{pillar.title}</h3>
+              <p>{pillar.description}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>
+
+<style>
+  .nosotros {
+    background: var(--color-gray-dark);
+    color: var(--color-white);
+    position: relative;
+    overflow: hidden;
+    min-height: 94svh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  
+  }
+
+  .nosotros-watermark {
+    right: -8%;
+    top: 6%;
+    bottom: auto;
+  }
+
+  .n-heading {
+    grid-column: 1 / 6;
+  }
+
+  .n-label::after {
+    display: none;
+  }
+
+  .n-title {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: clamp(2rem, 3.6vw, 3rem);
+    line-height: 1.05;
+  }
+
+  .n-body {
+    grid-column: 7 / 13;
+    position: relative;
+    z-index: 1;
+  }
+  .n-body p {
+    font-size: 1.06rem;
+    font-weight: 300;
+    max-width: 60ch;
+    margin-bottom: 1.25rem;
+  }
+  .n-body p:last-of-type {
+    margin-bottom: 0;
+  }
+
+  .n-pillars {
+    list-style: none;
+    margin-top: 4rem;
+    padding-top: 1.75rem;
+    border-top: 3px solid var(--color-gold);
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.75rem;
+  }
+  .n-pillar h3 {
+    font-family: var(--font-sans);
+    font-weight: 800;
+    font-size: 1.15rem;
+    color: var(--color-white);
+    margin-bottom: 0.6rem;
+  }
+  .n-pillar p {
+    font-size: 0.92rem;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.6);
+    line-height: 1.5;
+    max-width: 26ch;
+    margin-bottom: 0;
+  }
+
+  @media (max-width: 900px) {
+    .n-heading,
+    .n-body {
+      grid-column: 1 / -1;
+    }
+    .n-title {
+      margin: 1.5rem 0 2rem;
+    }
+    .n-pillars {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+  }
+</style>
