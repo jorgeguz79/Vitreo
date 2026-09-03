@@ -18,7 +18,7 @@ import logoMark from "../../assets/images/logo-mark.png";
 
     <nav id="site-nav" class="site-nav" data-nav aria-label="Principal">
       {navLinks.map((link) => <a href={link.href}>{link.label}</a>)}
-      <a href="#" class="portal-btn">Portal de inversionistas</a>
+      <a href={siteMeta.investorPortalUrl} target="_blank" rel="noopener noreferrer" class="portal-btn">Portal de inversionistas</a>
     </nav>
 
     <button

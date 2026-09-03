@@ -15,6 +15,7 @@ export const siteMeta = {
   locale: "es",
   regions: "Colombia · Panamá · España",
   sector: "Deuda Privada · Sector inmobiliario",
+  investorPortalUrl: "https://login.vitreo.com.co/",
 } as const;
 
 export const navLinks = [
