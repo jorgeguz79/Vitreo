@@ -73,7 +73,7 @@ export const principles: Principle[] = [
     number: "03",
     icon: "search",
     description:
-      "Seleccionamos con cuidado tanto las inversiones como a los socios inversionistas con quienes trabajamos.",
+      "Seleccionamos con cuidado tanto las inversiones como a los inversionistas con quienes trabajamos.",
   },
   {
     number: "04",

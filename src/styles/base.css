@@ -42,6 +42,11 @@ a {
   text-decoration: none;
 }
 
+/* Deja espacio para el header sticky al saltar/hacer scroll a una sección */
+section[id] {
+  scroll-margin-top: var(--header-height);
+}
+
 img,
 picture {
   max-width: 100%;

@@ -20,6 +20,16 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 <html lang={siteMeta.locale}>
   <head>
     <meta charset="UTF-8" />
+    <script is:inline>
+      // Si la URL trae un hash al cargar (recarga, link compartido, historial
+      // del navegador), evita que el navegador salte a esa sección: la carga
+      // inicial siempre debe mostrar el Hero. El scroll a una sección solo
+      // debe ocurrir cuando el usuario hace click en un botón/link interno.
+      history.scrollRestoration = "manual";
+      if (location.hash) {
+        history.replaceState(null, "", location.pathname + location.search);
+      }
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
@@ -48,5 +58,100 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
       <slot />
     </main>
     <Footer />
+    <div id="scroll-reach-spacer" aria-hidden="true"></div>
+
+    <script>
+      // En algunos navegadores móviles, window.innerHeight (lo que el
+      // navegador usa internamente para calcular el scroll máximo) reporta
+      // un valor más grande que el viewport visual real (clientHeight) —
+      // aparentemente ligado a cómo cada navegador calcula el "viewport
+      // grande" cuando la barra de direcciones se oculta. El navegador
+      // limita el scroll a "alto total de la página − ese innerHeight",
+      // así que si la última sección (Contacto) no tiene suficiente
+      // contenido después de ella, esa posición límite queda más arriba
+      // de lo necesario y nunca se puede alinear su tope con el header.
+      //
+      // Este spacer invisible al final de la página agranda el documento
+      // exactamente por esa diferencia (innerHeight − clientHeight), lo
+      // que cancela el problema sin importar su magnitud en cada equipo.
+      function updateScrollReachSpacer() {
+        const spacer = document.getElementById("scroll-reach-spacer");
+        if (!spacer) return;
+        const gap = window.innerHeight - document.documentElement.clientHeight;
+        spacer.style.height = gap > 0 ? `${gap}px` : "0px";
+      }
+      updateScrollReachSpacer();
+      window.addEventListener("resize", updateScrollReachSpacer);
+      window.addEventListener("orientationchange", updateScrollReachSpacer);
+    </script>
+
+    <script>
+      // El scroll "smooth" nativo del navegador puede quedar interrumpido a
+      // medio camino si algo genera trabajo en el hilo principal durante la
+      // animación (p. ej. decodificar una imagen que entra en pantalla) —
+      // el navegador simplemente deja de animar y no reanuda, dejando la
+      // sección "cortada". Esta animación propia recalcula el destino en
+      // CADA fotograma (no solo al iniciar), así que aunque el layout
+      // cambie a mitad de camino, se autocorrige hasta aterrizar en el
+      // lugar correcto en vez de quedar atascada.
+      function scrollToSection(target: HTMLElement) {
+        const getTargetY = () => {
+          const header = document.querySelector<HTMLElement>(".site-header");
+          const headerHeight = header?.getBoundingClientRect().height ?? 0;
+          return target.getBoundingClientRect().top + window.scrollY - headerHeight;
+        };
+
+        const startY = window.scrollY;
+        const startTime = performance.now();
+        // Distancias largas (p. ej. hasta Contacto) necesitan más tiempo:
+        // a la misma duración fija, un salto más largo implica llamadas de
+        // scroll más "grandes" por fotograma, y en algunos navegadores
+        // móviles esas llamadas se pierden, dejando la página corta.
+        const distance = Math.abs(getTargetY() - startY);
+        const duration = Math.min(900, Math.max(400, distance * 0.3));
+
+        function step(now: number) {
+          const progress = Math.min((now - startTime) / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const targetY = getTargetY();
+          window.scrollTo({ top: startY + (targetY - startY) * eased, behavior: "instant" });
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            settle();
+          }
+        }
+
+        // Verificación final: si alguna llamada de scroll se perdió durante
+        // la animación, la posición real puede quedar corta respecto al
+        // destino. Reintenta hasta que coincidan (o tras unos intentos).
+        function settle(attempts = 0) {
+          requestAnimationFrame(() => {
+            const finalTarget = getTargetY();
+            if (Math.abs(window.scrollY - finalTarget) > 2 && attempts < 5) {
+              window.scrollTo({ top: finalTarget, behavior: "instant" });
+              settle(attempts + 1);
+            }
+          });
+        }
+
+        requestAnimationFrame(step);
+      }
+
+      document.addEventListener("click", (event) => {
+        const link = (event.target as HTMLElement)?.closest<HTMLAnchorElement>('a[href*="#"]');
+        if (!link) return;
+
+        const url = new URL(link.href);
+        if (url.pathname !== window.location.pathname || url.hash.length <= 1) return;
+
+        const target = document.querySelector(url.hash);
+        if (!(target instanceof HTMLElement) || target.tagName !== "SECTION") return;
+
+        event.preventDefault();
+        history.pushState(null, "", url.hash);
+        scrollToSection(target);
+      });
+    </script>
   </body>
 </html>

@@ -1,9 +1,20 @@
 ---
+import { Image } from "astro:assets";
 import { contactInfo } from "../../data/site";
+import monogram from "../../assets/images/Monograma-Blanco.png";
 ---
 
 <section id="contacto" class="contacto" aria-labelledby="contacto-title">
-  <span class="watermark contacto-watermark" style="--wm-color: var(--color-carbon); --wm-opacity: 0.05;" aria-hidden="true">V</span>
+  <Image
+    src={monogram}
+    alt=""
+    aria-hidden="true"
+    width={939}
+    height={914}
+    class="watermark contacto-watermark"
+    style="--wm-invert: 1; --wm-opacity: 0.05;"
+    loading="lazy"
+  />
 
   <div class="container grid-12">
     <div class="c-left">
@@ -101,6 +112,10 @@ import { contactInfo } from "../../data/site";
     top: auto;
   }
 
+  .grid-12 {
+    align-items: end;
+  }
+
   .c-left {
     grid-column: 1 / 6;
     position: relative;
@@ -141,7 +156,7 @@ import { contactInfo } from "../../data/site";
     flex-shrink: 0;
     font-size: 0.78rem;
     align-self: center;
-    color: var(--color-white);
+    color: var(--color-carbon);
   }
 
   .c-right {
@@ -150,14 +165,8 @@ import { contactInfo } from "../../data/site";
     z-index: 1;
   }
 
-  @media (min-width: 901px) {
-    .c-right {
-      margin-top: clamp(24px, 4vw, 56px);
-    }
-  }
-
   .field {
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.9rem;
   }
   .field label {
     display: block;
@@ -172,7 +181,7 @@ import { contactInfo } from "../../data/site";
     width: 100%;
     background: transparent;
     border: none;
-    border-bottom: 3px solid var(--color-carbon);
+    border-bottom: 1px solid var(--color-carbon);
     padding: 0.7rem 0.2rem;
     font-family: var(--font-sans);
     font-size: 1rem;
@@ -195,13 +204,12 @@ import { contactInfo } from "../../data/site";
   }
   .field textarea {
     resize: vertical;
-    min-height: 220px;
+    min-height: 65px;
   }
 
   .submit-btn {
     width: 100%;
     justify-content: center;
-    margin-top: 0.5rem;
   }
 
   .form-status {

@@ -20,6 +20,15 @@
   --container-pad: clamp(20px, 4vw, 56px);
   --grid-gap: clamp(12px, 2vw, 28px);
 
+  /* Alto real del header (sticky), usado para compensar el scroll a anclas */
+  --header-height: 88px;
+
   /* Bordes / radios: el diseño es intencionalmente recto (sin radios) */
   --radius: 0;
+}
+
+@media (max-width: 500px) {
+  :root {
+    --header-height: 72px;
+  }
 }

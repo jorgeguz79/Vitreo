@@ -3,10 +3,21 @@ import { Image } from "astro:assets";
 import PrincipleIcon from "../icons/PrincipleIcon.astro";
 import { principles } from "../../data/site";
 import libraryImage from "../../assets/images/biblioteca.jpg";
+import monogram from "../../assets/images/Monograma-Blanco.png";
+import handshakeIcon from "../../assets/images/apreton-de-manos.png";
 ---
 
 <section id="principios" class="principios" aria-labelledby="principios-title">
-  <span class="watermark principios-watermark" aria-hidden="true">V</span>
+  <Image
+    src={monogram}
+    alt=""
+    aria-hidden="true"
+    width={939}
+    height={914}
+    class="watermark principios-watermark"
+    style="--wm-invert: 1;"
+    loading="lazy"
+  />
 
   <div class="principios-top">
     <div class="principios-left">
@@ -22,7 +33,11 @@ import libraryImage from "../../assets/images/biblioteca.jpg";
             <li class="principio-row" class:list={{ "principio-row--highlight": index % 2 === 0 }}>
               <span class="principio-n" aria-hidden="true">{principle.number}</span>
               <span class="principio-icon">
-                <PrincipleIcon name={principle.icon} />
+                {index === 3 ? (
+                  <Image src={handshakeIcon} alt="" aria-hidden="true" width={512} height={428} loading="lazy" />
+                ) : (
+                  <PrincipleIcon name={principle.icon} />
+                )}
               </span>
               <p>{principle.description}</p>
             </li>
@@ -133,6 +148,11 @@ import libraryImage from "../../assets/images/biblioteca.jpg";
     color: var(--color-carbon);
     flex-shrink: 0;
   }
+  .principio-icon img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
 
   .principio-row p {
     font-size: 1rem;
@@ -165,7 +185,12 @@ import libraryImage from "../../assets/images/biblioteca.jpg";
       position: relative;
       inset: auto;
       clip-path: none;
-      min-height: 280px;
+      /* height (no min-height): el img hijo usa height:100% + object-fit:
+         cover para recortarse a esta franja — un min-height no es una
+         altura "definida", así que el 100% del img no resolvía contra él
+         y la imagen se estiraba a su alto intrínseco completo (660px en
+         vez de 280px), inflando el alto de toda la sección en móvil. */
+      height: 280px;
     }
     .principio-row {
       grid-template-columns: 48px 44px 1fr;

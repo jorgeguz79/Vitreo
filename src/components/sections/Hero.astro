@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import { siteMeta } from "../../data/site";
 import heroImage from "../../assets/images/hero-fachada.jpg";
+import monogram from "../../assets/images/Monograma-Blanco.png";
 ---
 
 <section class="hero">
@@ -15,7 +16,16 @@ import heroImage from "../../assets/images/hero-fachada.jpg";
     loading="eager"
     fetchpriority="high"
   />
-  <span class="watermark hero-watermark" style="--wm-color: var(--color-white); --wm-opacity: 0.07;" aria-hidden="true">V</span>
+  <Image
+    src={monogram}
+    alt=""
+    aria-hidden="true"
+    width={939}
+    height={914}
+    class="watermark hero-watermark"
+    style="--wm-opacity: 0.07;"
+    loading="lazy"
+  />
 
   <div class="container grid-12">
     <p class="eyebrow hero-eyebrow" style="grid-column: 1 / -1;">Family office</p>
@@ -148,6 +158,28 @@ import heroImage from "../../assets/images/hero-fachada.jpg";
     }
     .hero-sub {
       margin-top: 1.75rem;
+    }
+    .hero-foot {
+      flex-wrap: nowrap;
+      font-size: 8px;
+      gap: 0.6rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .hero-foot::-webkit-scrollbar {
+      display: none;
+    }
+    .hero-foot span {
+      white-space: nowrap;
+    }
+  }
+
+  @media (max-width: 500px) {
+    .hero-foot {
+      font-size: 8px;
+      letter-spacing: 0.03em;
+      gap: 0.4rem;
     }
   }
 </style>

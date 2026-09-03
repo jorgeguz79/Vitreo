@@ -1,9 +1,20 @@
 ---
+import { Image } from "astro:assets";
 import { pillars } from "../../data/site";
+import monogram from "../../assets/images/Monograma-Blanco.png";
 ---
 
 <section id="nosotros" class="nosotros" aria-labelledby="nosotros-title">
-  <span class="watermark nosotros-watermark" style="--wm-color: var(--color-white); --wm-opacity: 0.06;" aria-hidden="true">V</span>
+  <Image
+    src={monogram}
+    alt=""
+    aria-hidden="true"
+    width={939}
+    height={914}
+    class="watermark nosotros-watermark"
+    style="--wm-opacity: 0.06;"
+    loading="lazy"
+  />
 
   <div class="container grid-12">
     <div class="n-heading">
@@ -109,13 +120,20 @@ import { pillars } from "../../data/site";
   .n-pillar p {
     font-size: 0.92rem;
     font-weight: 300;
-    color: rgba(255, 255, 255, 0.6);
+    color: var(--color-gold);
     line-height: 1.5;
     max-width: 26ch;
     margin-bottom: 0;
   }
 
   @media (max-width: 900px) {
+    .nosotros {
+      /* En móvil el contenido (párrafos + 3 pilares apilados) suele ser
+         más alto que el min-height, así que el centrado con flex ya no
+         tiene espacio de sobra: sin este padding, el texto queda pegado
+         al borde superior de la sección. */
+      padding: 110px 0 70px;
+    }
     .n-heading,
     .n-body {
       grid-column: 1 / -1;

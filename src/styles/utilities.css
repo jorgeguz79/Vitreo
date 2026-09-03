@@ -40,18 +40,17 @@
   color: var(--color-gold);
 }
 
-/* Marca de agua tipográfica de fondo ("V"), usada en varias secciones */
+/* Marca de agua de fondo (monograma), usada en varias secciones */
 .watermark {
   position: absolute;
   z-index: 0;
   pointer-events: none;
   user-select: none;
-  font-family: var(--font-sans);
-  font-weight: 900;
-  line-height: 0.75;
-  font-size: min(70vw, 900px);
-  color: var(--wm-color, var(--color-carbon));
+  display: block;
+  width: min(70vw, 900px);
+  height: auto;
   opacity: var(--wm-opacity, 0.06);
+  filter: invert(var(--wm-invert, 0));
 }
 
 /* Botones brutalistas: sin radio, borde grueso, invierten color al pasar el mouse */
